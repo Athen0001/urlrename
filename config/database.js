@@ -7,7 +7,7 @@ const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, proces
   logging: false, // Desativa logs de SQL para um ambiente mais limpo
 });
 
-const connectDB = async () => {
+export const connectDB = async () => {
   try {
     await sequelize.authenticate();
     console.log('Conexão ao banco de dados foi estabelecida com sucesso.');
@@ -17,4 +17,4 @@ const connectDB = async () => {
   }
 };
 
-module.exports = { sequelize, connectDB };
+export { sequelize };

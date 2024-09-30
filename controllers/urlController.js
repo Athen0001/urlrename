@@ -1,13 +1,13 @@
 import Url from '../models/url.js';
 import validateUrl from '../utils/validateUrls.js';
-const crypto = require('crypto');
+import crypto from 'crypto';
 
 // Gera código aleatório para a URL encurtada
 const generateCode = () => {
   return crypto.randomBytes(3).toString('hex'); // Gera um código de 6 caracteres
 };
 
-exports.shortenUrl = async (req, res) => {
+export const shortenUrl = async (req, res) => {
   const { originalUrl } = req.body;
 
   if (!validateUrl(originalUrl)) {
@@ -31,7 +31,7 @@ exports.shortenUrl = async (req, res) => {
   }
 };
 
-exports.redirectUrl = async (req, res) => {
+export const redirectUrl = async (req, res) => {
   const { code } = req.params;
 
   try {
