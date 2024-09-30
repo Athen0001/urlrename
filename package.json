@@ -1,0 +1,16 @@
+{
+  "dependencies": {
+    "sequelize": "^6.37.3",
+    "valid-url": "^1.0.9"
+  },
+  "name": "url-shortener-backend",
+  "version": "1.0.0",
+  "description": "URL shortener app",
+  "main": "app.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Athen0001",
+  "license": "ISC"
+}
