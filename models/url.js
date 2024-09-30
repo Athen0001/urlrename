@@ -1,5 +1,5 @@
 import { DataTypes } from 'sequelize';
-import sequelize from '../config/database.js';
+import { sequelize } from '../config/database.js';
 
 const Url = sequelize.define('Url', {
   code: {
@@ -19,4 +19,4 @@ const Url = sequelize.define('Url', {
   timestamps: true, // Inclui as colunas `createdAt` e `updatedAt`
 });
 
-module.exports = Url;
+export default Url;

@@ -13,10 +13,10 @@ const app = express();
 connectDB();
 
 // Middleware
-app.use(helmet());
-app.use(cors());
-app.use(morgan('tiny'));
-app.use(express.json());
+app.use(helmet()); // Segurança com cabeçalhos HTTP
+app.use(cors()); // Habilita CORS
+app.use(morgan('tiny')); // Logs de requisições
+app.use(express.json()); // Permite receber JSON no corpo das requisições
 
 // Rotas
 app.use('/', urlRoutes);

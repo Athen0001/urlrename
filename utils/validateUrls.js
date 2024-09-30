@@ -4,4 +4,4 @@ const validateUrl = (url) => {
   return validUrl.isUri(url);
 };
 
-module.exports = validateUrl;
+export default validateUrl;
