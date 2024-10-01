@@ -1,0 +1,137 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Arial", sans-serif;
+  background-color: #f0f4ff;
+  color: #333;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-content: center;
+  align-items: center;
+}
+main {
+  width: 90%;
+  max-width: 1200px;
+  background-color: #ffffff;
+  padding: 40px 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+
+header {
+  text-align: center;
+  padding: 20px;
+}
+header h1 {
+  font-size: 2.5rem;
+  color: #a1c5ff;
+}
+
+.url-input-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40vh;
+  background-color: #b5d1fd;
+  border-radius: 8px;
+  margin: 0 2px;
+}
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+.url-input-section .url-form {
+  width: 100%;
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.url-input-section .url-form input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+  border: 2px solid rgb(237.5, 244.2021276596, 255);
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+}
+.url-input-section .url-form button {
+  background-color: #ffb3ba;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2rem;
+}
+.url-input-section .url-form button:hover {
+  background-color: rgb(255, 128, 139.6973684211);
+}
+
+.explanation-section {
+  background-color: white;
+  padding: 40px 20px;
+  text-align: center;
+}
+.explanation-section h2 {
+  color: #333;
+  font-size: 2rem;
+  margin-bottom: 20px;
+  text-align: center;
+}
+.explanation-section p {
+  font-size: 1.2rem;
+  color: #333;
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+footer {
+  background-color: #a1c5ff;
+  color: white;
+  text-align: center;
+  padding: 20px;
+  border-radius: 8px;
+  margin: 0 2px;
+}
+footer p {
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  header h1 {
+    font-size: 2rem;
+  }
+  .url-input-section {
+    height: auto;
+    padding: 20px 0;
+  }
+  .url-input-section .url-form input {
+    font-size: 1rem;
+  }
+  .url-input-section .url-form button {
+    font-size: 1rem;
+    padding: 8px 16px;
+  }
+  .explanation-section {
+    padding: 20px;
+  }
+  .explanation-section h2 {
+    font-size: 1.75rem;
+  }
+  .explanation-section p {
+    font-size: 1rem;
+  }
+}
+
+/*# sourceMappingURL=styles.css.map */

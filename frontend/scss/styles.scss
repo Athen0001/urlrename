@@ -1,0 +1,139 @@
+// Variáveis de cor
+$primary-color: #a1c5ff;
+$secondary-color: #ffb3ba;
+$background-color: #f0f4ff;
+$font-color: #333;
+
+// Reset básico
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+// Corpo principal
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: $background-color;
+  color: $font-color;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; // Para manter o footer na parte inferior
+}
+
+// Header principal
+header {
+  text-align: center;
+  padding: 20px;
+
+  h1 {
+    font-size: 2.5rem;
+    color: $primary-color;
+  }
+}
+
+// Seção do input
+.url-input-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40vh;
+
+  .url-form {
+    width: 100%;
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    input {
+      width: 100%;
+      padding: 10px;
+      border-radius: 10px;
+      border: 2px solid lighten($primary-color, 15%);
+      font-size: 1.2rem;
+      margin-bottom: 20px; // Espaçamento entre input e botão
+    }
+
+    button {
+      background-color: $secondary-color;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      font-size: 1.2rem;
+
+      &:hover {
+        background-color: darken($secondary-color, 10%);
+      }
+    }
+  }
+}
+
+// Seção de explicação
+.explanation-section {
+  background-color: lighten($primary-color, 50%);
+  padding: 40px 20px;
+
+  h2 {
+    color: $font-color;
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+
+  p {
+    font-size: 1.2rem;
+    color: $font-color;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+}
+
+// Footer
+footer {
+  background-color: $primary-color;
+  color: white;
+  text-align: center;
+  padding: 20px;
+
+  p {
+    margin: 0;
+  }
+}
+
+// Responsividade
+@media (max-width: 768px) {
+  header h1 {
+    font-size: 2rem;
+  }
+
+  .url-input-section {
+    height: auto; // Para ajustar a altura em dispositivos menores
+    padding: 20px 0;
+
+    .url-form {
+      input {
+        font-size: 1rem;
+      }
+
+      button {
+        font-size: 1rem;
+        padding: 8px 16px;
+      }
+    }
+  }
+
+  .explanation-section {
+    padding: 20px;
+
+    h2 {
+      font-size: 1.75rem;
+    }
+
+    p {
+      font-size: 1rem;
+    }
+  }
+}
