@@ -17,8 +17,12 @@
   "type": "module",
   "scripts": {
     "start": "node app.js",
+    "sass": "sass --watch ../frontend/scss:../frontend/css",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Athen0001",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "sass": "^1.79.4"
+  }
 }
