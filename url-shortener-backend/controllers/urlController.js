@@ -1,6 +1,7 @@
 import Url from '../models/url.js';
 import validateUrl from '../utils/validateUrls.js';
 import crypto from 'crypto';
+import sanitizeHtml from 'sanitize-html';
 
 // Gera código aleatório para a URL encurtada
 const generateCode = () => {
@@ -8,7 +9,12 @@ const generateCode = () => {
 };
 
 export const shortenUrl = async (req, res) => {
-  const { originalUrl } = req.body;
+  let { originalUrl } = req.body;
+
+  originalUrl = sanitizeHtml(originalUrl, {
+    allowedTags: [],
+    allowedAttributes: {}
+  });
 
   if (!validateUrl(originalUrl)) {
     return res.status(400).json({ error: 'URL inválida.' });
@@ -32,7 +38,12 @@ export const shortenUrl = async (req, res) => {
 };
 
 export const redirectUrl = async (req, res) => {
-  const { code } = req.params;
+  let { code } = req.params;
+
+  code = sanitizeHtml(code, {
+    allowedTags: [],
+    allowedAttributes: {}
+  });
 
   try {
     const url = await Url.findOne({ where: { code } });
