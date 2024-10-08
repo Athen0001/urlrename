@@ -15,12 +15,12 @@ const sanitizeInput = (input) => {
     document.getElementById('url-input').value = sanitizedInput;
 
     try {
-        const response = await fetch('/shorten', {
+        const response = await fetch('http://localhost:5000/shorten', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ originalUrl: sanitizeInput })
+            body: JSON.stringify({ originalUrl: sanitizedInput })
         });
 
         if (response.ok) {
@@ -31,6 +31,7 @@ const sanitizeInput = (input) => {
             document.getElementById('shortened-url-display').innerText = `Shortened URL: ${data.shortUrl}`;
           } else {
             console.error('Erro:', response.statusText);
+            alert('Something goes wrong.');
           }
         } catch (error) {
           console.error('Erro ao fazer a chamada:', error);

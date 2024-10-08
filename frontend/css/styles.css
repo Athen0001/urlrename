@@ -77,6 +77,11 @@ header h1 {
   background-color: rgb(255, 128, 139.6973684211);
 }
 
+#shortened-url-display {
+  padding-top: 10px;
+  font-weight: 600;
+}
+
 .explanation-section {
   background-color: white;
   padding: 40px 20px;
