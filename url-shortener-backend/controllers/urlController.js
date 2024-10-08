@@ -2,12 +2,27 @@ import Url from '../models/url.js';
 import validateUrl from '../utils/validateUrls.js';
 import crypto from 'crypto';
 import sanitizeHtml from 'sanitize-html';
+import path from 'path';
+
+const __dirname = path.resolve();
 
 // Gera código aleatório para a URL encurtada
 const generateCode = () => {
   return crypto.randomBytes(3).toString('hex'); // Gera um código de 6 caracteres
 };
 
+//GET HOME
+export const home = (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/index.html'));
+};
+export const serveCss = (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/css/styles.css'));
+};
+export const serveJs = (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/js/script.js'));
+};
+
+//POST shorten
 export const shortenUrl = async (req, res) => {
   let { originalUrl } = req.body;
 
@@ -33,10 +48,11 @@ export const shortenUrl = async (req, res) => {
     return res.status(201).json({ shortUrl: `${process.env.BASE_URL}/${url.code}` });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Erro no servidor.' });
+    res.status(500).json({ error: 'Erro no servidor.', details: error.message });
   }
 };
 
+//GET redirect
 export const redirectUrl = async (req, res) => {
   let { code } = req.params;
 
@@ -59,6 +75,6 @@ export const redirectUrl = async (req, res) => {
     return res.redirect(url.originalUrl);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Erro no servidor.' });
+    res.status(500).json({ error: 'Erro no servidor.', details: error.message });
   }
 };

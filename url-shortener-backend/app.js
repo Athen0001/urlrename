@@ -1,3 +1,4 @@
+import path from 'path';
 import 'dotenv/config'; // Carrega as variáveis de ambiente
 import express from 'express';
 import { connectDB } from './config/database.js';
@@ -7,12 +8,16 @@ import helmet from 'helmet';
 import cors from 'cors';
 import morgan from 'morgan';
 
+
 const app = express();
+const __dirname = path.resolve();
 
 // Conexão ao banco de dados
 connectDB();
 
 // Middleware
+app.use(express.static(path.join(__dirname, 'frontend')));
+app.use(express.urlencoded({ extended: true }));
 app.use(helmet()); // Segurança com cabeçalhos HTTP
 app.use(cors()); // Habilita CORS
 app.use(morgan('tiny')); // Logs de requisições
