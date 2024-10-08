@@ -1,6 +1,6 @@
 import Url from '../models/url.js';
 import validateUrl from '../utils/validateUrls.js';
-import crypto from 'crypto';
+//import crypto from 'crypto';
 import sanitizeHtml from 'sanitize-html';
 import path from 'path';
 
@@ -8,7 +8,13 @@ const __dirname = path.resolve();
 
 // Gera código aleatório para a URL encurtada
 const generateCode = () => {
-  return crypto.randomBytes(3).toString('hex'); // Gera um código de 6 caracteres
+  const charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  let code = '';
+  for (let i = 0; i < 8; i++) {
+    const randomIndex = Math.floor(Math.random() * charset.length);
+    code += charset[randomIndex];
+  }
+  return code;
 };
 
 //GET HOME
