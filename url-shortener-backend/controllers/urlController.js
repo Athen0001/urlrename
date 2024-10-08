@@ -1,6 +1,5 @@
 import Url from '../models/url.js';
 import validateUrl from '../utils/validateUrls.js';
-//import crypto from 'crypto';
 import sanitizeHtml from 'sanitize-html';
 import path from 'path';
 
@@ -48,8 +47,22 @@ export const shortenUrl = async (req, res) => {
       return res.json({ shortUrl: `${process.env.BASE_URL}/${url.code}` });
     }
 
-    const code = generateCode();
-    url = await Url.create({ originalUrl, code });
+    let code;
+    let urlCreated = false;
+
+    while (!urlCreated) {
+      try {
+        code = generateCode();
+        url = await Url.create({ originalUrl, code });
+        urlCreated = true;
+      } catch (error) {
+        if (error.name === 'SequelizeUniqueConstraintError') {
+          console.log('Colisão detectada, gerando novo código.')
+        } else {
+          throw error;
+        }
+      }
+    }
 
     return res.status(201).json({ shortUrl: `${process.env.BASE_URL}/${url.code}` });
   } catch (error) {
