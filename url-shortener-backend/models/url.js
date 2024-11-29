@@ -1,36 +1,41 @@
-import { DataTypes } from 'sequelize';
-import { sequelize } from '../config/database.js';
+import { DataTypes } from "sequelize";
+import { sequelize } from "../config/database.js";
 
-const Url = sequelize.define('Url', {
-  id: {
-    type: DataTypes.UUID,
-    defaultValue: DataTypes.UUIDV4,
-    primaryKey: true,
-    allowNull: false
+const Url = sequelize.define(
+  "Url",
+  {
+    id: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      primaryKey: true,
+      allowNull: false,
+    },
+    code: {
+      type: DataTypes.STRING(10),
+      allowNull: false,
+      unique: true,
+    },
+    originalUrl: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    accessCount: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0,
+    },
   },
-  code: {
-    type: DataTypes.STRING(10),
-    allowNull: false,
-    unique: true,
-  },
-  originalUrl: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  accessCount: {
-    type: DataTypes.INTEGER,
-    defaultValue: 0,
-  },
-}, {
-  timestamps: true, // Inclui as colunas `createdAt` e `updatedAt`
-});
+  {
+    timestamps: true, // insert the `createdAt` and `updatedAt` columns
+  }
+);
 
-sequelize.sync()
+sequelize
+  .sync()
   .then(() => {
-    console.log('Tabela Url sincronizada com sucesso.');
+    console.log("Url table successful sync");
   })
   .catch((error) => {
-    console.error('Erro ao sincronizar a tabela Url:', error);
+    console.error("Table sync error:", error);
   });
 
 export default Url;

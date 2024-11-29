@@ -1,43 +1,35 @@
-import Url from '../models/url.js';
-import validateUrl from '../utils/validateUrls.js';
-import sanitizeHtml from 'sanitize-html';
-import path from 'path';
+import Url from "../models/url.js";
+import validateUrl from "../utils/validateUrls.js";
+import sanitizeHtml from "sanitize-html";
+import CustomError from "../utils/customError.js";
+import generateCode from "../utils/generateCode.js";
+import path from "path";
 
 const __dirname = path.resolve();
 
-// Gera código aleatório para a URL encurtada
-const generateCode = () => {
-  const charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-  let code = '';
-  for (let i = 0; i < 8; i++) {
-    const randomIndex = Math.floor(Math.random() * charset.length);
-    code += charset[randomIndex];
-  }
-  return code;
-};
-
-//GET HOME
+//GET HOME, serving the statics
 export const home = (req, res) => {
-  res.sendFile(path.join(__dirname, '../frontend/index.html'));
+  res.sendFile(path.join(__dirname, "../frontend/index.html"));
 };
 export const serveCss = (req, res) => {
-  res.sendFile(path.join(__dirname, '../frontend/css/styles.css'));
+  res.sendFile(path.join(__dirname, "../frontend/css/styles.css"));
 };
 export const serveJs = (req, res) => {
-  res.sendFile(path.join(__dirname, '../frontend/js/script.js'));
+  res.sendFile(path.join(__dirname, "../frontend/js/script.js"));
 };
 
 //POST shorten
-export const shortenUrl = async (req, res) => {
+export const shortenUrl = async (req, res, next) => {
   let { originalUrl } = req.body;
 
   originalUrl = sanitizeHtml(originalUrl, {
+    //here i block tags and attributes injection, but i think could be in the front
     allowedTags: [],
-    allowedAttributes: {}
+    allowedAttributes: {},
   });
 
   if (!validateUrl(originalUrl)) {
-    return res.status(400).json({ error: 'URL inválida.' });
+    return next(new CustomError("Invalid URL", 400));
   }
 
   try {
@@ -56,44 +48,47 @@ export const shortenUrl = async (req, res) => {
         url = await Url.create({ originalUrl, code });
         urlCreated = true;
       } catch (error) {
-        if (error.name === 'SequelizeUniqueConstraintError') {
-          console.log('Colisão detectada, gerando novo código.')
+        if (error.name === "SequelizeUniqueConstraintError") {
+          //a simple colision fix for a simple project. Algorythms complexity will grow.
+          console.log("Colision detected, generating new code.");
         } else {
-          throw error;
+          throw new CustomError("Database error.", 500, error.message);
         }
       }
     }
 
-    return res.status(201).json({ shortUrl: `${process.env.BASE_URL}/${url.code}` });
+    return res
+      .status(201)
+      .json({ shortUrl: `${process.env.BASE_URL}/${url.code}` });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Erro no servidor.', details: error.message });
+    next(error);
   }
 };
 
 //GET redirect
-export const redirectUrl = async (req, res) => {
+export const redirectUrl = async (req, res, next) => {
   let { code } = req.params;
 
   code = sanitizeHtml(code, {
     allowedTags: [],
-    allowedAttributes: {}
+    allowedAttributes: {},
   });
 
   try {
     const url = await Url.findOne({ where: { code } });
 
     if (!url) {
-      return res.status(404).json({ error: 'URL não encontrada.' });
+      return next(new CustomError("URL not found.", 404));
     }
 
-    // Atualiza contador de acessos
+    // Update the access counter
     url.accessCount += 1;
     await url.save();
 
     return res.redirect(url.originalUrl);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Erro no servidor.', details: error.message });
+    next(error);
   }
 };

@@ -1,13 +1,13 @@
-import { Sequelize } from 'sequelize';
+import { Sequelize } from "sequelize";
 
 const sequelize = new Sequelize(
-  process.env.DB_NAME, // Nome do banco de dados
-  process.env.DB_USER, // Usuário do banco de dados
-  process.env.DB_PASSWORD, // Senha do banco de dados
+  process.env.DB_NAME, // Database name
+  process.env.DB_USER, // Database user
+  process.env.DB_PASSWORD, // Database password
   {
-    host: process.env.DB_HOST, // Host do banco (URL do Render)
-    port: process.env.DB_PORT || 5432, // Porta do PostgreSQL
-    dialect: 'postgres', // Dialeto usado pelo Sequelize
+    host: process.env.DB_HOST, // Database host (external or local endpoint)
+    port: process.env.DB_PORT || 5432, // PostgreSQL port
+    dialect: "postgres", // Which database is in use
     logging: false,
   }
 );
@@ -15,12 +15,11 @@ const sequelize = new Sequelize(
 export const connectDB = async () => {
   try {
     await sequelize.authenticate();
-    console.log('Conexão ao banco de dados foi estabelecida com sucesso.');
+    console.log("Successfull database connection.");
   } catch (error) {
-    console.error('Não foi possível conectar ao banco de dados:', error);
+    console.error("Problems with the database connection:", error);
     process.exit(1);
   }
 };
 
 export { sequelize };
-
